@@ -11,3 +11,6 @@ set encoding=utf-8
 
 " NASM syntax for assembler files
 au BufNewFile,BufRead *.asm set filetype=nasm
+
+" Yoink buffer size in lines
+set viminfo='20,<500
