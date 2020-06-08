@@ -1,5 +1,8 @@
 syntax on
 
+" Source defaults
+source $VIMRUNTIME/defaults.vim
+
 " Indentation is 3 spaces
 " Comments are aligned to 8 spaces
 " No tabs
