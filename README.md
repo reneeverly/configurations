@@ -1,4 +1,5 @@
 # configurations
-A sample of the configurations I use for various programs
+A sample of the configurations I use:
 * vim
-* elementary OS
+* elementaryOS
+* CentOS 6
