@@ -41,7 +41,7 @@ using the store doesn't work very well
 sudo apt-get install libreoffice
 ```
 
-### Fix Calibri (maybe not required with the "right way" LibreOffice)
+### Fix Calibri (Still required even if libreoffice is installed "correctly")
 create `~/.config/fontconfig/fonts.conf`
 Add text:
 ```
