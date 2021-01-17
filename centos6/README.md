@@ -16,4 +16,4 @@ Place `99-lefthand-naturalscroll.conf` in `/etc/X11/xorg.conf.d/`.
 
 ## Prevent System from Sleeping
 
-Place `98-power-fix.conf` in `/etc/X11/xorg.conf.d/`.
+Place `98-sleep-fix.conf` in `/etc/X11/xorg.conf.d/`.
