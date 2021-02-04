@@ -1,10 +1,9 @@
-version: "1"
+version: "3"
 
 services:
   audioserve:
     image: izderadicka/audioserve
-    command: "./audioserve --no-authentication /music /audiobooks"
-    user: "${UID}:${GUID}"
+    command: "--no-authentication /music /audiobooks"
     ports:
       - 3000:3000
     volumes:
@@ -13,7 +12,6 @@ services:
     restart: always
   filebrowser:
     image: hurlenko/filebrowser
-    user: "{$UID}:${GUID}"
     ports:
       - 8080:8080
     volumes:
