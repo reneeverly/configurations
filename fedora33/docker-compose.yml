@@ -17,4 +17,6 @@ services:
     volumes:
       - /rdata/docstore:/data
       - /rdata/configs/filebrowser:/config
+      - /rdata/music:/data/Music (mapped)
+      - /rdata/audiobooks/Audiobooks (mapped)
     restart: always
