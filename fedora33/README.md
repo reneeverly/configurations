@@ -19,5 +19,5 @@ I followed the [Official Install Guide](https://docs.docker.com/compose/install/
 So far the docker-compose is set up with:
 * [audioserve](https://github.com/izderadicka/audioserve) for music and audiobook streaming.
 * [filebrowser](https://github.com/hurlenko/filebrowser-docker) for file management.
-
-The volume mounting is currently limited to the primary disk of the system, as the only other disk is for backups.  Ideally I'll get another two disks spun up for even more storage capacity.
+* [homer](https://github.com/bastienwirtz/homer) for managing links and providing a dashboard.
+* [nginx](https://github.com/nginxinc/docker-nginx) for reverse proxy.
