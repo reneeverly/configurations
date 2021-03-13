@@ -31,7 +31,21 @@ services:
     image: nginx
     ports:
       - 80:80
+      - 8008:8008
     volumes:
       - /rdata/configs/nginx/reverse_proxy.conf:/etc/nginx/conf.d/default.conf
       - /rdata/www:/var/www
+    restart: always
+  scurity:
+    image: analogj/scrutiny
+    ports:
+      - 8087:8080
+    volumes:
+      - /run/udev:/run/udev:ro
+      - /rdata/configs/scrutiny:/scrutiny/config
+    devices:
+      - /dev/sda
+#      - /dev/sdb
+    cap_add:
+      - SYS_RAWIO
     restart: always
