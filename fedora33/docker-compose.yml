@@ -3,6 +3,7 @@ version: "3"
 services:
   audioserve:
     image: izderadicka/audioserve
+    hostname: audioserve
     command: "--no-authentication /music /audiobooks"
     ports:
       - 3000:3000
@@ -12,6 +13,7 @@ services:
     restart: always
   filebrowser:
     image: hurlenko/filebrowser
+    hostname: filebrowser
     ports:
       - 8080:8080
     volumes:
@@ -22,6 +24,7 @@ services:
     restart: always
   homer:
     image: b4bz/homer
+    hostname: homer
     ports:
       - 8086:8080
     volumes:
@@ -29,6 +32,7 @@ services:
     restart: always
   reverseproxy:
     image: nginx
+    hostname: nginx
     ports:
       - 80:80
       - 8008:8008
@@ -36,8 +40,9 @@ services:
       - /rdata/configs/nginx/reverse_proxy.conf:/etc/nginx/conf.d/default.conf
       - /rdata/www:/var/www
     restart: always
-  scurity:
+  scrutiny:
     image: analogj/scrutiny
+    hostname: scrutiny
     ports:
       - 8087:8080
     volumes:
@@ -48,4 +53,14 @@ services:
 #      - /dev/sdb
     cap_add:
       - SYS_RAWIO
+    restart: always
+  dokuwiki:
+    image: ghcr.io/linuxserver/dokuwiki
+    hostname: dokuwiki
+    environment:
+      - TZ=US/Chicago
+    volumes:
+      - /rdata/configs/dokuwiki:/config
+    ports:
+      - 8088:80
     restart: always
