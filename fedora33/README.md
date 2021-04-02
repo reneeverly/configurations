@@ -21,3 +21,5 @@ So far the docker-compose is set up with:
 * [filebrowser](https://github.com/hurlenko/filebrowser-docker) for file management.
 * [homer](https://github.com/bastienwirtz/homer) for managing links and providing a dashboard.
 * [nginx](https://github.com/nginxinc/docker-nginx) for reverse proxy.
+* DokuWiki
+* Pinry
