@@ -72,3 +72,27 @@ services:
     ports:
       - 8089:80
     restart: always
+  homelights:
+    image: reneeverly/homelights:latest
+    hostname: homelights
+    network_mode: "bridge"
+    volumes:
+      - /rdata/configs/homelights/www/:/var/www
+    ports:
+      - 8091:80
+    restart: always
+  onlyoffice-server:
+    image: onlyoffice/documentserver
+    hostname: onlyoffice-server
+    ports:
+      - 8092:80
+    restart: always
+  onlyoffice-client:
+    image: php:7.4-apache-buster
+    hostname: onlyoffice-client
+    ports:
+      - 8093:80
+    volumes:
+      - /rdata/configs/onlyoffice/w3:/var/www/html
+      - /rdata/onlydocs:/var/www/html/files
+    restart: always

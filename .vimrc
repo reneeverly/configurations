@@ -21,3 +21,7 @@ au BufNewFile,BufRead *.asm set filetype=nasm
 
 " Yoink buffer size in lines
 set viminfo='20,<500
+
+" set syntax highlighting engine
+" (rendering engine)
+set re=2
