@@ -86,6 +86,9 @@ services:
     hostname: onlyoffice-server
     ports:
       - 8092:80
+    environment:
+      - NGINX_WORKER_PROCESSES=1
+      - NGINX_WORKER_CONNECTIONS=1024
     restart: always
   onlyoffice-client:
     image: php:7.4-apache-buster
