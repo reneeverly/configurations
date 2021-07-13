@@ -21,6 +21,7 @@ services:
       - /rdata/configs/filebrowser:/config
       - /rdata/music:/data/Music (mapped)
       - /rdata/audiobooks:/data/Audiobooks (mapped)
+      - /rdata/onlydocs:/data/onlydocs (mapped)
     restart: always
   homer:
     image: b4bz/homer
