@@ -12,16 +12,17 @@ services:
       - /rdata/audiobooks:/audiobooks
     restart: always
   filebrowser:
-    image: hurlenko/filebrowser
+    image: filebrowser/filebrowser
     hostname: filebrowser
     ports:
-      - 8080:8080
+      - 8080:80
     volumes:
-      - /rdata/docstore:/data
-      - /rdata/configs/filebrowser:/config
-      - /rdata/music:/data/Music (mapped)
-      - /rdata/audiobooks:/data/Audiobooks (mapped)
-      - /rdata/onlydocs:/data/onlydocs (mapped)
+      - /rdata/docstore:/srv
+      - /rdata/configs/filebrowser/filebrowser.db:/database.db
+      #- /rdata/configs/filebrowser/.filebrowser.json:/.filebrowser.json
+      - /rdata/music:/srv/Music (mapped)
+      - /rdata/audiobooks:/srv/Audiobooks (mapped)
+      - /rdata/onlydocs:/srv/onlydocs (mapped)
     restart: always
   homer:
     image: b4bz/homer
