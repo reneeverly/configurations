@@ -101,8 +101,8 @@ services:
       - /rdata/configs/onlyoffice/w3:/var/www/html
       - /rdata/onlydocs:/var/www/html/files
     restart: always
-  browsh:
-    image: gcr.io/browsh-193210/baas
-    ports:
-    - 2222:2222
-    restart: always
+#  browsh:
+#    image: browsh/browsh:latest
+#    ports:
+#    - 2222:2222
+#    restart: always
