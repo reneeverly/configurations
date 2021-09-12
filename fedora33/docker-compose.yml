@@ -102,7 +102,7 @@ services:
       - /rdata/onlydocs:/var/www/html/files
     restart: always
   browsh:
-    image: browsh/browsh:latest
+    image: gcr.io/browsh-193210/baas
     ports:
     - 2222:2222
     restart: always
