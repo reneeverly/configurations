@@ -1,6 +1,28 @@
 version: "3"
 
 services:
+  # Backend
+  nginxserve:
+    image: nginx
+    hostname: nginx
+    ports:
+      - 80:80
+      - 8008:8008 # debugging port
+    volumes:
+      - /rdata/configs/nginx/proxy_static_dynamic.conf.template:/etc/nginx/templates/default.conf.template
+      #- /rdata/configs/nginx/reverse_proxy.conf:/etc/nginx/conf.d/default.conf
+      - /rdata/www:/var/www
+    links:
+      - phpfpm
+    environment:
+      - PROXY_USE_TLD=sun
+    restart: always
+  phpfpm:
+    image: php:fpm
+    hostname: phpfpm
+    volumes:
+      - /rdata/www:/var/www
+  # Applications
   audioserve:
     image: izderadicka/audioserve
     hostname: audioserve
@@ -31,16 +53,6 @@ services:
       - 8086:8080
     volumes:
       - /rdata/configs/homer:/www/assets
-    restart: always
-  reverseproxy:
-    image: nginx
-    hostname: nginx
-    ports:
-      - 80:80
-      - 8008:8008
-    volumes:
-      - /rdata/configs/nginx/reverse_proxy.conf:/etc/nginx/conf.d/default.conf
-      - /rdata/www:/var/www
     restart: always
   scrutiny:
     image: analogj/scrutiny
@@ -74,35 +86,30 @@ services:
     ports:
       - 8089:80
     restart: always
-  homelights:
-    image: reneeverly/homelights:latest
-    hostname: homelights
-    network_mode: "bridge"
-    volumes:
-      - /rdata/configs/homelights/www/:/var/www
-    ports:
-      - 8091:80
-    restart: always
-  onlyoffice-server:
-    image: onlyoffice/documentserver
-    hostname: onlyoffice-server
-    ports:
-      - 8092:80
-    environment:
-      - NGINX_WORKER_PROCESSES=1
-      - NGINX_WORKER_CONNECTIONS=1024
-    restart: always
-  onlyoffice-client:
-    image: php:7.4-apache-buster
-    hostname: onlyoffice-client
-    ports:
-      - 8093:80
-    volumes:
-      - /rdata/configs/onlyoffice/w3:/var/www/html
-      - /rdata/onlydocs:/var/www/html/files
-    restart: always
-#  browsh:
-#    image: browsh/browsh:latest
+#  homelights:
+#    image: reneeverly/homelights:latest
+#    hostname: homelights
+#    network_mode: "bridge"
+#    volumes:
+#      - /rdata/configs/homelights/www/:/var/www
 #    ports:
-#    - 2222:2222
+#      - 8091:80
+#    restart: always
+#  onlyoffice-server:
+#    image: onlyoffice/documentserver
+#    hostname: onlyoffice-server
+#    ports:
+#      - 8092:80
+#    environment:
+#      - NGINX_WORKER_PROCESSES=1
+#      - NGINX_WORKER_CONNECTIONS=1024
+#    restart: always
+#  onlyoffice-client:
+#    image: php:7.4-apache-buster
+#    hostname: onlyoffice-client
+#    ports:
+#      - 8093:80
+#    volumes:
+#      - /rdata/configs/onlyoffice/w3:/var/www/html
+#      - /rdata/onlydocs:/var/www/html/files
 #    restart: always
