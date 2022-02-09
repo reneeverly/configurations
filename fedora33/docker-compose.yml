@@ -35,7 +35,7 @@ services:
     restart: always
   # Applications
   audioserve:
-    image: izderadicka/audioserve
+    image: izderadicka/audioserve:latest
     hostname: audioserve
     command: "--no-authentication /music /audiobooks"
     ports:
@@ -59,7 +59,7 @@ services:
       - /rdata/onlydocs:/srv/onlydocs (mapped)
     restart: always
   homer:
-    image: b4bz/homer
+    image: b4bz/homer:latest
     hostname: homer
     ports:
       - 8086:8080
@@ -81,7 +81,8 @@ services:
       - SYS_RAWIO
     restart: always
   dokuwiki:
-    image: ghcr.io/linuxserver/dokuwiki
+    # version: Hogfather (number 2020-07-29), patches rolled into it despite the old year
+    image: ghcr.io/linuxserver/dokuwiki:version-2020-07-29
     hostname: dokuwiki
     environment:
       - TZ=US/Chicago
