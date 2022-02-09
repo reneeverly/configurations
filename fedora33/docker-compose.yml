@@ -41,11 +41,12 @@ services:
     ports:
       - 3000:3000
     volumes:
+      - /rdata/configs/audioserve:/home/audioserve/.audioserve
       - /rdata/music:/music
       - /rdata/audiobooks:/audiobooks
     restart: always
   filebrowser:
-    image: filebrowser/filebrowser
+    image: filebrowser/filebrowser:v2
     hostname: filebrowser
     ports:
       - 8080:80
