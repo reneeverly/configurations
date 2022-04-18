@@ -10,14 +10,16 @@ cat /dev/tty.usbserial-AD0K5LKG > journal_2022_04_16.bin
 
 ### Character Set
 
-8x and 9x are exactly the same as in CP437, Ax and Bx differ.
+8x and 9x are exactly the same as in CP437, but the rest differ.
+8x through Bx confirmed through using the word processor, Cx exists in ROM, but might not be accessible through word processor.  TODO: Determine that.
 
-|  | 0| 1| 2| 3| 4| 5| 6| 7| 8| 9| A| B| C| D| E| F|
-|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
-|8x| Ç| ü| é| â| ä| à| å| ç| ê| ë| è| ï| î| ì| Ä| Å|
-|9x| É| æ| Æ| ô| ö| ò| û| ù| ÿ| Ö| Ü| ¢| £| ¥| ₧| ƒ|
-|Ax| á| í| ó| ú| ñ| Ñ| ª| º| ¿|  | §| ½| ¼| ¡| «| »|
-|Bx| α| ß| Γ| π| Σ| σ| µ| τ| Ω| δ| φ| ±| °| ·| ²| √|
+|    | 0| 1| 2| 3| 4| 5| 6| 7| 8| 9| A| B| C| D| E| F|
+|----|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|--|
+|8x  | Ç| ü| é| â| ä| à| å| ç| ê| ë| è| ï| î| ì| Ä| Å|
+|9x  | É| æ| Æ| ô| ö| ò| û| ù| ÿ| Ö| Ü| ¢| £| ¥| ₧| ƒ|
+|Ax  | á| í| ó| ú| ñ| Ñ| ª| º| ¿| ¨| §| ½| ¼| ¡| «| »|
+|Bx  | α| ß| Γ| π| Σ| σ| µ| τ| Ω| δ| φ| ±| °| ·| ²| √|
+|Cx\*| └| ┴| ┬| ├| ─| ┼| │| ┤| ┐| ┘| ┌|  |  |  |  |  |
 
 ### Command Sequences
 
