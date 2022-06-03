@@ -25,3 +25,6 @@ set viminfo='20,<500
 " set syntax highlighting engine
 " (rendering engine)
 set re=2
+
+" show match count
+set shortmess-=S
