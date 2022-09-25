@@ -8,6 +8,13 @@ exclude=wpa_supplican* kernel*
 ```
 I'm not sure if disabling kernel updates is also necessary, but it's late and the update didn't brick the system so I'll call it a win.  Later refinement to be determined.
 
+
+
+An additional consideration is that closing the lid sends the laptop to sleep.  This is not ideal for a device intended to be a server.  Edit `/etc/systemd/logind.conf` and add the line:
+```
+HandleLidSwitch=ignore
+```
+
 ## 2. Install Docker
 I followed the [Official Docker Install Guide](https://docs.docker.com/engine/install/fedora/) for this.
 
