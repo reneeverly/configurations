@@ -14,7 +14,8 @@ services:
     links:
       - phpfpm
     environment:
-      - PROXY_USE_TLD=sun
+      - PROXY_USE_TLD=local
+      - PROXY_USE_IP=dawn.local
     restart: always
   phpfpm:
     image: php:fpm
@@ -22,31 +23,34 @@ services:
     volumes:
       - /rdata/www:/var/www
     restart: always
-  coredns:
-    image: coredns/coredns
-    command: "-conf /etc/coredns/Corefile"
-    ports:
-      # instructions for opening port 53: https://github.com/soumukhe/coredns_docker-compose
-      - 53:53
-      - "53:53/udp"
+#  nginx-proxy:
+#    image: nginxproxy/nginx-proxy
+#    ports:
+#      - "80:80"
+#    volumes:
+#      - /var/run/docker.sock:/tmp/docker.sock:ro
+  avahi-helper:
+    image: hardillb/nginx-proxy-avahi-helper
     volumes:
-      - /rdata/configs/coredns:/etc/coredns
+      - /var/run/docker.sock:/tmp/docker.sock
+      - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
     restart: always
   # Applications
-  audioserve:
-    image: izderadicka/audioserve:latest
-    hostname: audioserve
-    command: "--no-authentication /music /audiobooks"
-    ports:
-      - 3000:3000
-    volumes:
-      - /rdata/configs/audioserve:/home/audioserve/.audioserve
-      - /rdata/music:/music
-      - /rdata/audiobooks:/audiobooks
-    restart: always
+#  audioserve:
+#    image: izderadicka/audioserve:latest
+#    hostname: audioserve
+#    command: "--no-authentication /music /audiobooks"
+#    ports:
+#      - 3000:3000
+#    volumes:
+#      - /rdata/configs/audioserve:/home/audioserve/.audioserve
+#      - /rdata/music:/music
+#      - /rdata/audiobooks:/audiobooks
+#    restart: always
   filebrowser:
     image: filebrowser/filebrowser:v2
     hostname: filebrowser
+    container_name: filebrowser
     ports:
       - 8080:80
     volumes:
@@ -55,17 +59,24 @@ services:
       - /rdata/music:/srv/Music (mapped)
       - /rdata/audiobooks:/srv/Audiobooks (mapped)
       - /rdata/onlydocs:/srv/onlydocs (mapped)
+    environment:
+      - VIRTUAL_HOST=filebrowser.local
     restart: always
   homer:
     image: b4bz/homer:latest
     hostname: homer
+    container_name: homer
+    networks:
+      - reverse_proxy
     ports:
       - 8086:8080
     volumes:
       - /rdata/configs/homer:/www/assets
+    environment:
+      - VIRTUAL_HOST=homer.local
     restart: always
   scrutiny:
-    image: analogj/scrutiny
+    image: ghcr.io/analogj/scrutiny:master-omnibus
     hostname: scrutiny
     ports:
       - 8087:8080
@@ -77,26 +88,28 @@ services:
 #      - /dev/sdb
     cap_add:
       - SYS_RAWIO
-    restart: always
-  dokuwiki:
-    # version: Hogfather (number 2020-07-29), patches rolled into it despite the old year
-    image: ghcr.io/linuxserver/dokuwiki:version-2020-07-29
-    hostname: dokuwiki
     environment:
-      - TZ=US/Chicago
-    volumes:
-      - /rdata/configs/dokuwiki:/config
-    ports:
-      - 8088:80
+      - VIRTUAL_HOST=scrutiny.dawn.local
     restart: always
-  pinry:
-    image: getpinry/pinry
-    hostname: pinry
-    volumes:
-      - /rdata/configs/pinry:/data
-    ports:
-      - 8089:80
-    restart: always
+#  dokuwiki:
+#    # version: Hogfather (number 2020-07-29), patches rolled into it despite the old year
+#    image: ghcr.io/linuxserver/dokuwiki:version-2020-07-29
+#    hostname: dokuwiki
+#    environment:
+#      - TZ=US/Chicago
+#    volumes:
+#      - /rdata/configs/dokuwiki:/config
+#    ports:
+#      - 8088:80
+#    restart: always
+#  pinry:
+#    image: getpinry/pinry
+#    hostname: pinry
+#    volumes:
+#      - /rdata/configs/pinry:/data
+#    ports:
+#      - 8089:80
+#    restart: always
 #  homelights:
 #    image: reneeverly/homelights:latest
 #    hostname: homelights
@@ -124,3 +137,8 @@ services:
 #      - /rdata/configs/onlyoffice/w3:/var/www/html
 #      - /rdata/onlydocs:/var/www/html/files
 #    restart: always
+
+networks:
+  reverse_proxy:
+    driver: "bridge"
+    name: reverse_proxy
