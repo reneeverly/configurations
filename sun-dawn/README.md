@@ -14,6 +14,17 @@ An additional consideration is that closing the lid sends the laptop to sleep.  
 ```
 HandleLidSwitch=ignore
 ```
+## 1. Fan Control
+The default fan profile is... bad.  Install lm sensors to enable fan control.
+```
+sudo yum install lm_sensors
+```
+
+Drop the fancontrol file in as `/etc/fancontrol`, then start the service.
+```
+sudo systemctl enable fancontrol
+sydo systemctl start fancontrol
+```
 
 ## 2. Install Docker
 I followed the [Official Docker Install Guide](https://docs.docker.com/engine/install/fedora/) for this.

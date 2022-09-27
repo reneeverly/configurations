@@ -1,4 +1,4 @@
-version: "3"
+version: "3.3"
 
 services:
   # Backend
@@ -29,11 +29,13 @@ services:
 #      - "80:80"
 #    volumes:
 #      - /var/run/docker.sock:/tmp/docker.sock:ro
-  avahi-helper:
+  mdns:
     image: hardillb/nginx-proxy-avahi-helper
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
       - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
+      - /rdata/configs/mdns/Procfile:/usr/src/app/Procfile
+      - /rdata/configs/mdns/static_cnames:/static_cnames
     restart: always
   # Applications
 #  audioserve:
@@ -50,7 +52,6 @@ services:
   filebrowser:
     image: filebrowser/filebrowser:v2
     hostname: filebrowser
-    container_name: filebrowser
     ports:
       - 8080:80
     volumes:
@@ -65,9 +66,6 @@ services:
   homer:
     image: b4bz/homer:latest
     hostname: homer
-    container_name: homer
-    networks:
-      - reverse_proxy
     ports:
       - 8086:8080
     volumes:
@@ -75,22 +73,22 @@ services:
     environment:
       - VIRTUAL_HOST=homer.local
     restart: always
-  scrutiny:
-    image: ghcr.io/analogj/scrutiny:master-omnibus
-    hostname: scrutiny
-    ports:
-      - 8087:8080
-    volumes:
-      - /run/udev:/run/udev:ro
-      - /rdata/configs/scrutiny:/scrutiny/config
-    devices:
-      - /dev/sda
-#      - /dev/sdb
-    cap_add:
-      - SYS_RAWIO
-    environment:
-      - VIRTUAL_HOST=scrutiny.dawn.local
-    restart: always
+#  scrutiny:
+#    image: ghcr.io/analogj/scrutiny:master-omnibus
+#    hostname: scrutiny
+#    ports:
+#      - 8087:8080
+#    volumes:
+#      - /run/udev:/run/udev:ro
+#      - /rdata/configs/scrutiny:/scrutiny/config
+#    devices:
+#      - /dev/sda
+##      - /dev/sdb
+#    cap_add:
+#      - SYS_RAWIO
+#    environment:
+#      - VIRTUAL_HOST=scrutiny.dawn.local
+#    restart: always
 #  dokuwiki:
 #    # version: Hogfather (number 2020-07-29), patches rolled into it despite the old year
 #    image: ghcr.io/linuxserver/dokuwiki:version-2020-07-29
@@ -110,15 +108,6 @@ services:
 #    ports:
 #      - 8089:80
 #    restart: always
-#  homelights:
-#    image: reneeverly/homelights:latest
-#    hostname: homelights
-#    network_mode: "bridge"
-#    volumes:
-#      - /rdata/configs/homelights/www/:/var/www
-#    ports:
-#      - 8091:80
-#    restart: always
 #  onlyoffice-server:
 #    image: onlyoffice/documentserver
 #    hostname: onlyoffice-server
@@ -137,8 +126,3 @@ services:
 #      - /rdata/configs/onlyoffice/w3:/var/www/html
 #      - /rdata/onlydocs:/var/www/html/files
 #    restart: always
-
-networks:
-  reverse_proxy:
-    driver: "bridge"
-    name: reverse_proxy
