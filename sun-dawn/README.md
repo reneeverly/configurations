@@ -4,10 +4,12 @@ This is the configuration process for `dawn`, the (hopefully temporary) successo
 ## 0. Fedora 35 configuration
 I bricked the first four Fedora 35 installs by installing updates.  Turns out something about `wpa_supplicant` 1.10 completely breaks wireless; Whether that is due to the default `wpa_supplicant` config or the specific driver combination is something that I did not feel like determining.  It is easier to just disable updating `wpa_supplicant`.  Add the following to `/etc/dnf/dnf.conf`:
 ```
-exclude=wpa_supplican* kernel*
+exclude=wpa_supplican*
 ```
-I'm not sure if disabling kernel updates is also necessary, but it's late and the update didn't brick the system so I'll call it a win.  Later refinement to be determined.
-
+If, at some point, I decide to update wpa_supplicant, I should definitely remember to disable kernel updates at the same time.  DNF undo only works when the kernel has not also been updated.
+```
+exclude=kernel*
+```
 
 
 An additional consideration is that closing the lid sends the laptop to sleep.  This is not ideal for a device intended to be a server.  Edit `/etc/systemd/logind.conf` and add the line:
