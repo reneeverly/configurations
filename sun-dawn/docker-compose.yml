@@ -23,19 +23,21 @@ services:
     volumes:
       - /rdata/www:/var/www
     restart: always
-#  nginx-proxy:
-#    image: nginxproxy/nginx-proxy
-#    ports:
-#      - "80:80"
-#    volumes:
-#      - /var/run/docker.sock:/tmp/docker.sock:ro
-  mdns:
+  docker-mdns:
     image: hardillb/nginx-proxy-avahi-helper
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock
       - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
-      - /rdata/configs/mdns/Procfile:/usr/src/app/Procfile
-      - /rdata/configs/mdns/static_cnames:/static_cnames
+#      - /rdata/configs/mdns/Procfile:/usr/src/app/Procfile
+#      - /rdata/configs/mdns/static_cnames:/static_cnames
+    restart: always
+  static-mdns:
+    build:
+      context: .
+      dockerfile: static-mdns.Dockerfile
+    volumes:
+      - /rdata/configs/mdns/static_cnames:/cnames
+      - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
     restart: always
   # Applications
 #  audioserve:
@@ -73,22 +75,22 @@ services:
     environment:
       - VIRTUAL_HOST=homer.local
     restart: always
-#  scrutiny:
-#    image: ghcr.io/analogj/scrutiny:master-omnibus
-#    hostname: scrutiny
-#    ports:
-#      - 8087:8080
-#    volumes:
-#      - /run/udev:/run/udev:ro
-#      - /rdata/configs/scrutiny:/scrutiny/config
-#    devices:
-#      - /dev/sda
-##      - /dev/sdb
-#    cap_add:
-#      - SYS_RAWIO
-#    environment:
-#      - VIRTUAL_HOST=scrutiny.dawn.local
-#    restart: always
+  scrutiny:
+    image: ghcr.io/analogj/scrutiny:master-omnibus
+    hostname: scrutiny
+    ports:
+      - 8087:8080
+    volumes:
+      - /run/udev:/run/udev:ro
+      - /rdata/configs/scrutiny:/scrutiny/config
+    devices:
+      - /dev/sda
+#      - /dev/sdb
+    cap_add:
+      - SYS_RAWIO
+    environment:
+      - VIRTUAL_HOST=scrutiny.dawn.local
+    restart: always
 #  dokuwiki:
 #    # version: Hogfather (number 2020-07-29), patches rolled into it despite the old year
 #    image: ghcr.io/linuxserver/dokuwiki:version-2020-07-29
