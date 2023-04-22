@@ -18,6 +18,8 @@ I don't know if I plan on doing any container things on this device, but just in
 opkg instal dockerd docker luci-app-dockerman docker-compose
 ```
 
+In order to get port forwarding to work, you need to edit the firewall rule for `lan` such that it reads: `lan` &rArr; `wan, docker`
+
 ### Bandwidth Monitoring
 
 ```
