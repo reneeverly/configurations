@@ -6,9 +6,19 @@ A Raspberry Pi 3B+ running OpenWRT.
 
 ### Installing OpenWRT
 
+#### Flashing for the first time
 Follow instructions: https://medium.com/swlh/raspberry-pi-as-a-home-router-539afc7a9574
 
 Connect via the wireless modem in order to install the rtl8152 driver.
+
+#### Reflashing/updating through LuCI
+
+Fetch from: https://firmware-selector.openwrt.org/
+
+Add packages to the base image:
+```
+kmod-usb-net-rtl8152 r8152-firmware kmod-crypto-sha256 kmod-usb-net-cdc-ncm kmod-usb-net kmod-mii kmod-usb-net-cdc-ether
+```
 
 ### Docker
 
