@@ -18,7 +18,11 @@ Fetch from: https://firmware-selector.openwrt.org/
 Add packages to the base image:
 ```
 kmod-usb-net-rtl8152 r8152-firmware kmod-crypto-sha256 kmod-usb-net-cdc-ncm kmod-usb-net kmod-mii kmod-usb-net-cdc-ether
+kmod-usb-printer
+p910nd
+luci-app-p910nd luci-compat luci-lua-runtime lua liblua5.1.5 luci-lib-base luci-lib-nixio luci-lib-ip libnl-tiny1 luci-lib-jsonc liblucihttp-lua libubus-lua ucode-mod-lua
 ```
+(Initial package in row is the package required, all following are dependencies.)
 
 ### Docker
 
