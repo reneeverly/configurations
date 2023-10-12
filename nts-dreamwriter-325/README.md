@@ -1,9 +1,23 @@
 # NTS Dreamwriter 325
 
-## Transfering Files Over Serial
+## Transfering Files Over ~Serial~ XMODEM
 
+In the past, I was able to get by with basic serial, but there are some challenges that come with transfering the non-ascii files that way.  Now, I am using XMODEM protocol.
+
+To receive a file from the DreamWriter, use `./xrecv.sh filename` where `./xrecv.sh` is:
+```sh
+DEV=/dev/tty.usbserial-AD0K5LKG
+
+stty -f $DEV 9600
+rz $1 -X > $DEV < $DEV
 ```
-cat /dev/tty.usbserial-AD0K5LKG > journal_2022_04_16.bin
+
+To send a file to the DreamWriter, use `./xsend.sh filename` where `./xsend.sh` is:
+```sh
+DEV=/dev/tty.usbserial-AD0K5LKG
+
+stty -f $DEV 9600
+sz -X $1 > $DEV < $DEV
 ```
 
 ## Non-ASCII Files
