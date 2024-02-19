@@ -48,3 +48,9 @@ https://github.com/cokebar/openwrt-vlmcsd
 
 Upload & install the second package:
 https://github.com/cokebar/luci-app-vlmcsd
+
+
+### USB Webcam / Security Camera Setup
+```
+opkg install kmod-video-uvc luci-app-mjpg-streamer mjpg-streamer-input-uvc mjpg-streamer-www mjpg-streamer-output-http
+```
