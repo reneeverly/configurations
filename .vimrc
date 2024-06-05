@@ -6,9 +6,16 @@ source $VIMRUNTIME/defaults.vim
 " Indentation is 3 spaces
 " Comments are aligned to 8 spaces
 " No tabs
+" set shiftwidth=3
+" set expandtab
+" set smarttab
+
+" Indentation is tabs, shown as three columns.
+set noexpandtab
+set nosmarttab
+set autoindent
 set shiftwidth=3
-set expandtab
-set smarttab
+set tabstop=3
 
 " Send all mouse events to vim
 set mouse=a
