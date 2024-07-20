@@ -15,7 +15,7 @@ services:
       - phpfpm
     environment:
       - PROXY_USE_TLD=local
-      - PROXY_USE_IP=dawn.local
+      - PROXY_USE_IP=syzygy.local
     restart: always
   phpfpm:
     image: php:fpm
@@ -75,22 +75,36 @@ services:
     environment:
       - VIRTUAL_HOST=homer.local
     restart: always
-  scrutiny:
-    image: ghcr.io/analogj/scrutiny:master-omnibus
-    hostname: scrutiny
-    ports:
-      - 8087:8080
-    volumes:
-      - /run/udev:/run/udev:ro
-      - /rdata/configs/scrutiny:/scrutiny/config
-    devices:
-      - /dev/sda
-#      - /dev/sdb
-    cap_add:
-      - SYS_RAWIO
+piwigo:
+    image: lscr.io/linuxserver/piwigo:latest
+    container_name: piwigo
     environment:
-      - VIRTUAL_HOST=scrutiny.dawn.local
-    restart: always
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+		- VIRTUAL_HOST=piwigo.local
+    volumes:
+      - /rdata/configs/piwigo:/config
+      - /rdata/piwigo:/gallery
+    ports:
+      - 8094:80
+    restart: unless-stopped
+#  scrutiny:
+#    image: ghcr.io/analogj/scrutiny:master-omnibus
+#    hostname: scrutiny
+#    ports:
+#      - 8087:8080
+#    volumes:
+#      - /run/udev:/run/udev:ro
+#      - /rdata/configs/scrutiny:/scrutiny/config
+#    devices:
+#      - /dev/sda
+##      - /dev/sdb
+#    cap_add:
+#      - SYS_RAWIO
+#    environment:
+#      - VIRTUAL_HOST=scrutiny.syzygy.local
+#    restart: always
 #  dokuwiki:
 #    # version: Hogfather (number 2020-07-29), patches rolled into it despite the old year
 #    image: ghcr.io/linuxserver/dokuwiki:version-2020-07-29
