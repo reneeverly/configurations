@@ -90,7 +90,7 @@ services:
     ports:
       - 8094:80
     links:
-      - db
+      - piwigo_db
     restart: unless-stopped
   piwigo_db:
     image: mysql:latest
