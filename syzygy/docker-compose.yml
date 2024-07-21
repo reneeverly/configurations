@@ -75,7 +75,7 @@ services:
     environment:
       - VIRTUAL_HOST=homer.local
     restart: always
-piwigo:
+  piwigo:
     image: lscr.io/linuxserver/piwigo:latest
     container_name: piwigo
     environment:
