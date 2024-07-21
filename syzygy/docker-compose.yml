@@ -82,7 +82,7 @@ piwigo:
       - PUID=1000
       - PGID=1000
       - TZ=Etc/UTC
-		- VIRTUAL_HOST=piwigo.local
+      - VIRTUAL_HOST=piwigo.local
     volumes:
       - /rdata/configs/piwigo:/config
       - /rdata/piwigo:/gallery
