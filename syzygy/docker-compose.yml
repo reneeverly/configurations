@@ -78,6 +78,7 @@ services:
   piwigo:
     image: lscr.io/linuxserver/piwigo:latest
     container_name: piwigo
+    network_mode: bridge
     environment:
       - PUID=1000
       - PGID=1000
@@ -88,7 +89,19 @@ services:
       - /rdata/piwigo:/gallery
     ports:
       - 8094:80
+    links:
+      - db
     restart: unless-stopped
+  piwigo_db:
+    image: mysql:latest
+    network_mode: bridge
+    environment:
+      MYSQL_USER: "piwigo"
+      MYSQL_PASSWORD: "piwigo"
+      MYSQL_DATABASE: "piwigo"
+      MYSQL_RANDOM_ROOT_PASSWORD: "true"
+    volumes:
+      - /rdata/configs/piwigo_db:/var/lib/mysql
 #  scrutiny:
 #    image: ghcr.io/analogj/scrutiny:master-omnibus
 #    hostname: scrutiny
