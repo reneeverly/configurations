@@ -1,8 +1,8 @@
 # Getting Started
 This is the configuration for `syzygy`, a Dell PowerEdge R610 with Hardware RAID.  It is the permanent successor to `sunshine`, a Sun Microsystems Ultra24; which had been temporarily succeeded by `dawn`, a laptop I had on hand.  Syzygy has 32GB of RAM, two 500GB disks in RAID-1 for `/`, and four 500GB disks in RAID-6 for `/rdata/`.  It also has four NICs which could be relevant for when I move it in like six months.
 
-## 0. Fedora 39 upgrade
-Syzygy was running Fedora 37, so followed [Upgrading Fedora Linux Using DNF System Plugin](https://docs.fedoraproject.org/en-US/quick-docs/upgrading-fedora-offline/) along the official guidance to only hop two releases.  Reminder to self: Fedora 39 goes EOL in November, Fedora 41 releases in October; Upgrade then.
+## 0. Fedora 41 upgrade
+Syzygy OS history: Fedora 37 -> Fedora 39 -> Fedora 41.  Followed [Upgrading Fedora Linux Using DNF System Plugin](https://docs.fedoraproject.org/en-US/quick-docs/upgrading-fedora-offline/) along the official guidance to only hop two releases.  Reminder to self: Upgrade to Fedora 43 in November.
 
 ## 2. Install Docker
 I followed the [Official Docker Install Guide](https://docs.docker.com/engine/install/fedora/) for this.
