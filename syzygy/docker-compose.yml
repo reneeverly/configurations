@@ -1,56 +1,13 @@
 version: "3.3"
 
 services:
-  # Backend
-  nginxserve:
-    image: nginx
-    hostname: nginx
+  webserver:
+    image: lipanski/docker-static-website:latest
+    restart: always
     ports:
-      - 80:80
-      - 8008:8008 # debugging port
+      - 80:3000
     volumes:
-      - /rdata/configs/nginx/proxy_static_dynamic.conf.template:/etc/nginx/templates/default.conf.template
-      - /rdata/www:/var/www
-    links:
-      - phpfpm
-    environment:
-      - PROXY_USE_TLD=local
-      - PROXY_USE_IP=syzygy.local
-    restart: always
-  phpfpm:
-    image: php:fpm
-    hostname: phpfpm
-    volumes:
-      - /rdata/www:/var/www
-    restart: always
-  docker-mdns:
-    image: hardillb/nginx-proxy-avahi-helper
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock
-      - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
-#      - /rdata/configs/mdns/Procfile:/usr/src/app/Procfile
-#      - /rdata/configs/mdns/static_cnames:/static_cnames
-    restart: always
-  static-mdns:
-    build:
-      context: .
-      dockerfile: static-mdns.Dockerfile
-    volumes:
-      - /rdata/configs/mdns/static_cnames:/cnames
-      - /run/dbus/system_bus_socket:/run/dbus/system_bus_socket
-    restart: always
-  # Applications
-#  audioserve:
-#    image: izderadicka/audioserve:latest
-#    hostname: audioserve
-#    command: "--no-authentication /music /audiobooks"
-#    ports:
-#      - 3000:3000
-#    volumes:
-#      - /rdata/configs/audioserve:/home/audioserve/.audioserve
-#      - /rdata/music:/music
-#      - /rdata/audiobooks:/audiobooks
-#    restart: always
+      - /rdata/www:/home/static
   filebrowser:
     image: filebrowser/filebrowser:v2
     hostname: filebrowser
@@ -65,93 +22,3 @@ services:
     environment:
       - VIRTUAL_HOST=filebrowser.local
     restart: always
-  homer:
-    image: b4bz/homer:latest
-    hostname: homer
-    ports:
-      - 8086:8080
-    volumes:
-      - /rdata/configs/homer:/www/assets
-    environment:
-      - VIRTUAL_HOST=homer.local
-    restart: always
-  piwigo:
-    image: lscr.io/linuxserver/piwigo:latest
-    container_name: piwigo
-    network_mode: bridge
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Etc/UTC
-      - VIRTUAL_HOST=piwigo.local
-    volumes:
-      - /rdata/configs/piwigo:/config
-      - /rdata/piwigo:/gallery
-    ports:
-      - 8094:80
-    links:
-      - piwigo_db
-    restart: unless-stopped
-  piwigo_db:
-    image: mysql:latest
-    network_mode: bridge
-    environment:
-      MYSQL_USER: "piwigo"
-      MYSQL_PASSWORD: "piwigo"
-      MYSQL_DATABASE: "piwigo"
-      MYSQL_RANDOM_ROOT_PASSWORD: "true"
-    volumes:
-      - /rdata/configs/piwigo_db:/var/lib/mysql
-#  scrutiny:
-#    image: ghcr.io/analogj/scrutiny:master-omnibus
-#    hostname: scrutiny
-#    ports:
-#      - 8087:8080
-#    volumes:
-#      - /run/udev:/run/udev:ro
-#      - /rdata/configs/scrutiny:/scrutiny/config
-#    devices:
-#      - /dev/sda
-##      - /dev/sdb
-#    cap_add:
-#      - SYS_RAWIO
-#    environment:
-#      - VIRTUAL_HOST=scrutiny.syzygy.local
-#    restart: always
-#  dokuwiki:
-#    # version: Hogfather (number 2020-07-29), patches rolled into it despite the old year
-#    image: ghcr.io/linuxserver/dokuwiki:version-2020-07-29
-#    hostname: dokuwiki
-#    environment:
-#      - TZ=US/Chicago
-#    volumes:
-#      - /rdata/configs/dokuwiki:/config
-#    ports:
-#      - 8088:80
-#    restart: always
-#  pinry:
-#    image: getpinry/pinry
-#    hostname: pinry
-#    volumes:
-#      - /rdata/configs/pinry:/data
-#    ports:
-#      - 8089:80
-#    restart: always
-#  onlyoffice-server:
-#    image: onlyoffice/documentserver
-#    hostname: onlyoffice-server
-#    ports:
-#      - 8092:80
-#    environment:
-#      - NGINX_WORKER_PROCESSES=1
-#      - NGINX_WORKER_CONNECTIONS=1024
-#    restart: always
-#  onlyoffice-client:
-#    image: php:7.4-apache-buster
-#    hostname: onlyoffice-client
-#    ports:
-#      - 8093:80
-#    volumes:
-#      - /rdata/configs/onlyoffice/w3:/var/www/html
-#      - /rdata/onlydocs:/var/www/html/files
-#    restart: always
